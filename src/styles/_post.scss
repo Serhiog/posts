@@ -1,0 +1,98 @@
+.post {
+    max-width: 1170px;
+    margin   : 0 auto;
+
+    &__inner {
+        font-size: 16px
+    }
+
+    &__main {
+        @include flex;
+        flex-wrap       : wrap;
+        justify-content : center;
+        margin-bottom   : 85px;
+        max-width       : 330px;
+        margin          : 0 auto;
+        background-color: thistle;
+        border-radius   : 10px;
+        padding         : 20px;
+        box-shadow      : 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-bottom   : 74px;
+
+    }
+
+    &__author {
+        padding   : 10px;
+        text-align: center;
+    }
+
+    &__email {
+        display   : block;
+        width     : 100%;
+        text-align: center;
+        padding   : 10px;
+    }
+
+    &__text {
+        padding   : 10px;
+        text-align: center;
+    }
+
+    &__comments {
+        max-width       : 700px;
+        margin          : 0 auto;
+        background-color: paleturquoise;
+        border-radius   : 10px;
+        padding         : 30px;
+        box-shadow      : 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    &__list {
+        padding: 19px;
+    }
+
+    &__item {
+        padding      : 10px;
+        position     : relative;
+        border       : 1px dashed grey;
+        margin-bottom: 8px;
+    }
+
+    &__item-author {
+        padding: 5px;
+    }
+
+    &__item-email {
+        padding: 5px;
+    }
+
+    &__item-text {
+        padding: 5px;
+    }
+
+    &__title {
+        font-size     : 32px;
+        border-bottom : 2px solid grey;
+        width         : 100%;
+        text-align    : center;
+        padding-bottom: 5px;
+
+    }
+
+    &__btn {
+        text-transform: none;
+        position      : absolute;
+        left          : 98%;
+        top           : -4%;
+        border-radius : 50%;
+        background    : tomato;
+        color         : white;
+        width         : 22px;
+        height        : 22px;
+        border-radius : 50%;
+    }
+
+    &__loader{
+        margin: 0 auto;
+    }
+}
