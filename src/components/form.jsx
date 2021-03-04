@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { ActionCreator } from "../store/action"
 
-function Form({ handleName, formName, formEmail, formMessage, handleEmail, handleMessage, handleSendBtn, activeComments, handleSendBtnMessage }) {
+function Form({ handleSendBtn, actualComments, handleSendBtnMessage }) {
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -23,7 +23,7 @@ function Form({ handleName, formName, formEmail, formMessage, handleEmail, handl
         setName("")
         setEmail("")
         setMessage("")
-        activeComments.length ? handleSendBtnMessage(name, email, message) : handleSendBtn(name, email, message)
+        actualComments.length ? handleSendBtnMessage(name, email, message) : handleSendBtn(name, email, message)
     }
 
     return (
@@ -41,19 +41,11 @@ function Form({ handleName, formName, formEmail, formMessage, handleEmail, handl
 
 const mapStateToProps = (state) => ({
     formData: state.formData,
-    activeComments: state.activeComments
+    actualComments: state.actualComments
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    handleName(evt) {
-        dispatch(ActionCreator.handleName(evt.target.value))
-    },
-    handleEmail(evt) {
-        dispatch(ActionCreator.handleEmail(evt.target.value))
-    },
-    handleMessage(evt) {
-        dispatch(ActionCreator.handleMessage(evt.target.value))
-    },
+
     handleSendBtn(name, email, message) {
         dispatch(ActionCreator.generateId())
         dispatch(ActionCreator.handleSendBtn({ name, email, message }))

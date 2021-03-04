@@ -9,6 +9,10 @@ const initialState = {
   formEmail: "",
   formMessage: "",
   formId: "",
+  users: [],
+  combinedData: [],
+  actualComments: [],
+  combinedPost: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -23,13 +27,13 @@ const rootReducer = (state = initialState, action) => {
       return Object.assign({}, state, { activeComments: action.payload });
     case ActionType.DELETE_POST:
       return Object.assign({}, state, {
-        posts: state.posts.filter((post) => {
+        combinedData: state.combinedData.filter((post) => {
           return post.id !== action.payload;
         }),
       });
     case ActionType.DELETE_COMMENT:
       return Object.assign({}, state, {
-        activeComments: state.activeComments.filter((comment) => {
+        actualComments: state.actualComments.filter((comment) => {
           return comment.id !== action.payload;
         }),
       });
@@ -41,35 +45,78 @@ const rootReducer = (state = initialState, action) => {
       return Object.assign({}, state, { formMessage: action.payload });
     case ActionType.SEND_BTN:
       return Object.assign({}, state, {
-        posts: [
-          ...state.posts,
+        combinedData: [
+          ...state.combinedData,
           {
             name: action.payload.name,
             email: action.payload.email,
             body: action.payload.message,
             id: state.formId,
+            title: action.payload.email,
           },
         ],
       });
     case ActionType.SEND_BTN_MESSAGE:
       return Object.assign({}, state, {
-        activeComments: [
-          ...state.activeComments,
+        actualComments: [
+          ...state.actualComments,
           {
             name: action.payload.name,
             email: action.payload.email,
             body: action.payload.message,
             id: state.formId,
+            title: action.payload.email,
           },
         ],
       });
     case ActionType.GENERATE_ID:
       return Object.assign({}, state, {
-        formId: state.posts[state.posts.length - 1].id + 1,
+        formId: state.combinedData[state.combinedData.length - 1].id + 1,
       });
     case ActionType.GENERATE_ID_MESSAGE:
       return Object.assign({}, state, {
-        formId: state.activeComments[state.activeComments.length - 1].id + 1,
+        formId: state.actualComments[state.actualComments.length - 1].id + 1,
+      });
+    case ActionType.GET_USERS:
+      return Object.assign({}, state, {
+        users: action.payload,
+      });
+    case ActionType.COMBINE_DATA:
+      return Object.assign({}, state, {
+        combinedData: state.posts.map((post) => {
+          const user = state.users.find((user) => user.id === post.id);
+          return Object.assign(
+            {},
+            post,
+            { name: user.name },
+            { email: user.email }
+          );
+        }),
+      });
+    case ActionType.GET_COMMENTS:
+      return Object.assign({}, state, {
+        activeComments: action.payload.filter((c) => {
+          const comment = state.combinedData.find(
+            (post) => post.id === c.postId
+          );
+          return comment;
+        }),
+      });
+    case ActionType.GET_ACTUAL_COMMENTS:
+      return Object.assign({}, state, {
+        actualComments: state.activeComments.filter((comment) => {
+          return comment.postId === action.payload;
+        }),
+      });
+    case ActionType.COMBINE_POST:
+      return Object.assign({}, state, {
+        combinedPost: Object.assign(
+          {},
+          state.activePost,
+          state.users.find((user) => {
+            return user.id === state.activePost.id;
+          })
+        ),
       });
     default:
       return state;

@@ -1,4 +1,24 @@
-function getPosts() {
+export function getPosts() {
+  return fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => {
+      return response.json();
+    })
+    .then((json) => {
+      return json;
+    });
+}
+
+export function getUsers() {
+  return fetch("https://jsonplaceholder.typicode.com/users")
+    .then((response) => {
+      return response.json();
+    })
+    .then((json) => {
+      return json;
+    });
+}
+
+export function getComments() {
   return fetch("https://jsonplaceholder.typicode.com/comments")
     .then((response) => {
       return response.json();
@@ -8,8 +28,8 @@ function getPosts() {
     });
 }
 
-function getComments(id) {
-  return fetch("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
+export function getPost(id) {
+  return fetch("https://jsonplaceholder.typicode.com/posts/" + id)
     .then((response) => {
       return response.json();
     })
@@ -17,8 +37,6 @@ function getComments(id) {
       return json;
     });
 }
-
-export { getPosts, getComments };
 
 // /posts	100 posts
 // /comments	500 comments

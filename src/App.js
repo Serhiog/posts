@@ -1,15 +1,17 @@
 import "./style.css";
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import List from "./components/list";
 import Post from "./components/post";
+import { connect } from "react-redux";
+import history from "./browser-history";
 
-function App() {
+function App({ combinedData }) {
   return (
     <React.Fragment>
-      <BrowserRouter>
+      <Router history={history}>
         <Header />
         <Route
           exact
@@ -19,15 +21,28 @@ function App() {
           }}
         />
         <Route
-          path={"/post"}
-          render={() => {
-            return <Post />;
+          exact
+          path={"/post/:id"}
+          render={({ match }) => {
+            // const post = combinedData.find(
+            //   (data) => +data.id === +match.params.id
+            // );
+            return (
+              <Post
+                // post={post}
+                param={match.params.id}
+              />
+            );
           }}
         />
         <Footer />
-      </BrowserRouter>
+      </Router>
     </React.Fragment>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  combinedData: state.combinedData,
+});
+
+export default connect(mapStateToProps)(App);

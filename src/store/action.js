@@ -1,7 +1,7 @@
 const ActionType = {
   UPDATE_POSTS: "UPDATE_POSTS",
   GOT_POSTS: "GOT_POSTS",
-  GET_AUTHORS: "GET_AUTHORS",
+  GET_USERS: "GET_USERS",
   MERGE_DATA: "MERGE_DATA",
   SAVE_POST: "SAVE_POST",
   SAVE_COMMENTS: "SAVE_COMMENTS",
@@ -15,6 +15,10 @@ const ActionType = {
   SEND_BTN_MESSAGE: "SEND_BTN_MESSAGE",
   GENERATE_ID_MESSAGE: "GENERATE_ID_MESSAGE",
   CLEAR_FORM: "CLEAR_FORM",
+  COMBINE_DATA: "COMBINE_DATA",
+  GET_COMMENTS: "GET_COMMENTS",
+  GET_ACTUAL_COMMENTS: "GET_ACTUAL_COMMENTS",
+  COMBINE_POST: "COMBINE_POST",
 };
 
 const ActionCreator = {
@@ -25,16 +29,8 @@ const ActionCreator = {
   gotPosts: () => ({
     type: ActionType.GOT_POSTS,
   }),
-  updateAuthors: (payload) => ({
-    type: ActionType.GET_AUTHORS,
-    payload,
-  }),
   savePost: (payload) => ({
     type: ActionType.SAVE_POST,
-    payload,
-  }),
-  getComments: (payload) => ({
-    type: ActionType.SAVE_COMMENTS,
     payload,
   }),
   deletePost: (payload) => ({
@@ -63,13 +59,31 @@ const ActionCreator = {
   }),
   handleSendBtnMessage: (payload) => ({
     type: ActionType.SEND_BTN_MESSAGE,
-    payload
+    payload,
   }),
   generateId: () => ({
     type: ActionType.GENERATE_ID,
   }),
   generateIdMessage: () => ({
     type: ActionType.GENERATE_ID_MESSAGE,
+  }),
+  getUsers: (payload) => ({
+    type: ActionType.GET_USERS,
+    payload,
+  }),
+  combineData: () => ({
+    type: ActionType.COMBINE_DATA,
+  }),
+  getComments: (payload) => ({
+    type: ActionType.GET_COMMENTS,
+    payload,
+  }),
+  getActualComments: (payload) => ({
+    type: ActionType.GET_ACTUAL_COMMENTS,
+    payload,
+  }),
+  combinePost: () => ({
+    type: ActionType.COMBINE_POST,
   }),
 };
 

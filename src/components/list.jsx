@@ -1,11 +1,11 @@
 
 import { connect } from "react-redux";
-import { fetchPosts } from "../api-actions";
 import ListItem from "./list-ltem";
 import Form from "./form"
+import { ActionCreator } from "../store/action";
 
-function List({ fetchPosts, gotPosts }) {
-    fetchPosts()
+function List({ gotPosts, combineData }) {
+
     return (
         <>
             <section className="list">
@@ -19,12 +19,13 @@ function List({ fetchPosts, gotPosts }) {
 }
 
 const mapToStateProps = (state) => ({
-    gotPosts: state.gotPosts
+    gotPosts: state.gotPosts,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchPosts() {
-        dispatch(fetchPosts())
+
+    combineData() {
+        dispatch(ActionCreator.combineData())
     },
 })
 
