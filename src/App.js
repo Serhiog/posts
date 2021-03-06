@@ -24,12 +24,8 @@ function App({ combinedData }) {
           exact
           path={"/post/:id"}
           render={({ match }) => {
-            // const post = combinedData.find(
-            //   (data) => +data.id === +match.params.id
-            // );
             return (
               <Post
-                // post={post}
                 param={match.params.id}
               />
             );

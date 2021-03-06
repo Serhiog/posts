@@ -3,23 +3,14 @@ import { connect } from "react-redux"
 import { ActionCreator } from "../store/action"
 import Form from "./form"
 import { BeatLoader } from "react-spinners"
-import { fetchComments, fetchPost } from "../api-actions";
+import { fetchComments, fetchPost, fetchDeletePost } from "../api-actions";
 
-function Post({ param, activePost, activeComments, handleDeleteComment, fetchComments, getActualComments, actualComments, fetchPost, combinePost, combinedPost }) {
+function Post({ param, activeComments, fetchComments, fetchPost, combinedPost }) {
 
     useEffect(() => {
-        // fetchComments()
+        fetchComments(param)
         fetchPost(param)
     }, [])
-
-    useEffect(() => {
-        combinePost()
-    }, [])
-
-
-    // useEffect(() => {
-    //     getActualComments(activePost.id)
-    // }, [activeComments])
 
 
     return <div className="post">
@@ -36,13 +27,13 @@ function Post({ param, activePost, activeComments, handleDeleteComment, fetchCom
             <div className="post__comments">
                 <h2 className="post__title">COMMENTS:</h2>
                 <ul className="post__list">
-                    {!actualComments.length ? <li className="post__loader"><BeatLoader size={92} /></li> : null}
-                    {actualComments.map(comment => {
+                    {!activeComments.length ? <li className="post__loader"><BeatLoader size={92} /></li> : null}
+                    {activeComments.map(comment => {
                         return <li className="post__item" key={comment.id}>
                             <p className="post__item-author">{comment.name}</p>
                             <span className="post__item-email">{comment.email}</span>
                             <p className="post__item-text">{comment.body}</p>
-                            <button className="post__btn" onClick={() => { handleDeleteComment(comment.id) }}>X</button>
+                            <button className="post__btn" onClick={() => { console.log('del') }}>X</button>
                         </li>
                     })}
                 </ul>
@@ -63,8 +54,8 @@ const mapDispatchToProps = (dispatch) => ({
     handleDeleteComment(id) {
         dispatch(ActionCreator.deleteComment(id))
     },
-    fetchComments() {
-        dispatch(fetchComments())
+    fetchComments(id) {
+        dispatch(fetchComments(id))
     },
     getActualComments(id) {
         dispatch(ActionCreator.getActualComments(id))
@@ -74,7 +65,8 @@ const mapDispatchToProps = (dispatch) => ({
     },
     combinePost() {
         dispatch(ActionCreator.combinePost());
-    }
+    },
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

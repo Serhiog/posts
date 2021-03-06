@@ -1,4 +1,4 @@
-import { getPosts, getUsers, getComments, getPost } from "./api";
+import { getPosts, getUsers, getComments, getPost, deletePost } from "./api";
 import { ActionCreator } from "./store/action";
 
 export const fetchPosts = () => (dispatch) => {
@@ -17,14 +17,24 @@ export const fetchUsers = () => (dispatch) => {
   });
 };
 
-export const fetchComments = () => (dispatch) => {
-  getComments().then((response) => {
+export const fetchComments = (id) => (dispatch) => {
+  getComments(id).then((response) => {
     dispatch(ActionCreator.getComments(response));
   });
 };
 
 export const fetchPost = (id) => (dispatch) => {
-  getPost(id).then((response) => {
-    dispatch(ActionCreator.savePost(response));
+  getPost(id)
+    .then((response) => {
+      dispatch(ActionCreator.savePost(response));
+    })
+    .then(() => {
+      dispatch(ActionCreator.combinePost());
+    });
+};
+
+export const fetchDeletePost = (id) => (dispatch) => {
+  deletePost(id).then((response) => {
+    console.log(response);
   });
 };

@@ -48,7 +48,8 @@ const mapDispatchToProps = (dispatch) => ({
 
     handleSendBtn(name, email, message) {
         dispatch(ActionCreator.generateId())
-        dispatch(ActionCreator.handleSendBtn({ name, email, message }))
+        
+        // dispatch(ActionCreator.handleSendBtn({ name, email, message }))
     },
     handleSendBtnMessage(name, email, message) {
         dispatch(ActionCreator.generateIdMessage())

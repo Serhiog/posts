@@ -18,8 +18,8 @@ export function getUsers() {
     });
 }
 
-export function getComments() {
-  return fetch("https://jsonplaceholder.typicode.com/comments")
+export function getComments(id) {
+  return fetch("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
     .then((response) => {
       return response.json();
     })
@@ -30,6 +30,18 @@ export function getComments() {
 
 export function getPost(id) {
   return fetch("https://jsonplaceholder.typicode.com/posts/" + id)
+    .then((response) => {
+      return response.json();
+    })
+    .then((json) => {
+      return json;
+    });
+}
+
+export function deletePost(id) {
+  return fetch("https://jsonplaceholder.typicode.com/posts/" + id, {
+    method: "DELETE",
+  })
     .then((response) => {
       return response.json();
     })

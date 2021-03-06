@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { ActionCreator } from "../store/action";
 import { BeatLoader } from "react-spinners";
+import { fetchDeletePost, fetchPosts } from "../api-actions"
 
-function ListItem({ handleDeletePost, combinedData }) {
+function ListItem({ combinedData, deletePost }) {
 
     return (
         <>
@@ -16,7 +17,7 @@ function ListItem({ handleDeletePost, combinedData }) {
                             <span className="list__title">{post.name}</span>
                             <p className="list__about">{post.title}</p>
                         </NavLink>
-                        <button className="list__btn" onClick={() => { handleDeletePost(post.id) }}>X</button>
+                        <button className="list__btn" onClick={() => { deletePost(post.id) }}>X</button>
                     </li>
                 })}
             </ul >
@@ -29,9 +30,10 @@ const mapToStateProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    handleDeletePost(id) {
-        dispatch(ActionCreator.deletePost(id))
-    },
+    deletePost(id) {
+        dispatch(fetchDeletePost(id))
+        dispatch(fetchPosts())
+    }
 })
 
 

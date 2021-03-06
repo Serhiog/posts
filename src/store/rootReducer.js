@@ -95,19 +95,14 @@ const rootReducer = (state = initialState, action) => {
       });
     case ActionType.GET_COMMENTS:
       return Object.assign({}, state, {
-        activeComments: action.payload.filter((c) => {
-          const comment = state.combinedData.find(
-            (post) => post.id === c.postId
-          );
-          return comment;
-        }),
+        activeComments: action.payload,
       });
-    case ActionType.GET_ACTUAL_COMMENTS:
-      return Object.assign({}, state, {
-        actualComments: state.activeComments.filter((comment) => {
-          return comment.postId === action.payload;
-        }),
-      });
+    // case ActionType.GET_ACTUAL_COMMENTS:
+    //   return Object.assign({}, state, {
+    //     actualComments: state.activeComments.filter((comment) => {
+    //       return comment.postId === action.payload;
+    //     }),
+    //   });
     case ActionType.COMBINE_POST:
       return Object.assign({}, state, {
         combinedPost: Object.assign(
