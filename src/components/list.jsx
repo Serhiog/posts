@@ -2,9 +2,8 @@
 import { connect } from "react-redux";
 import ListItem from "./list-ltem";
 import Form from "./form"
-import { ActionCreator } from "../store/action";
 
-function List({ gotPosts, combineData }) {
+function List({ gotPosts }) {
 
     return (
         <>
@@ -22,11 +21,4 @@ const mapToStateProps = (state) => ({
     gotPosts: state.gotPosts,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-
-    combineData() {
-        dispatch(ActionCreator.combineData())
-    },
-})
-
-export default connect(mapToStateProps, mapDispatchToProps)(List);
+export default connect(mapToStateProps)(List);

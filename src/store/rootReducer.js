@@ -97,12 +97,6 @@ const rootReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         activeComments: action.payload,
       });
-    // case ActionType.GET_ACTUAL_COMMENTS:
-    //   return Object.assign({}, state, {
-    //     actualComments: state.activeComments.filter((comment) => {
-    //       return comment.postId === action.payload;
-    //     }),
-    //   });
     case ActionType.COMBINE_POST:
       return Object.assign({}, state, {
         combinedPost: Object.assign(

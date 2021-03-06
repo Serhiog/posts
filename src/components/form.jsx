@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { connect } from "react-redux"
 import { ActionCreator } from "../store/action"
 
@@ -48,12 +48,11 @@ const mapDispatchToProps = (dispatch) => ({
 
     handleSendBtn(name, email, message) {
         dispatch(ActionCreator.generateId())
-        
         // dispatch(ActionCreator.handleSendBtn({ name, email, message }))
     },
     handleSendBtnMessage(name, email, message) {
         dispatch(ActionCreator.generateIdMessage())
-        dispatch(ActionCreator.handleSendBtnMessage({ name, email, message }))
+        // dispatch(ActionCreator.handleSendBtnMessage({ name, email, message }))
     }
 })
 

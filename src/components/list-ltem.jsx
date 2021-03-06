@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { ActionCreator } from "../store/action";
 import { BeatLoader } from "react-spinners";
 import { fetchDeletePost, fetchPosts } from "../api-actions"
 

@@ -5,10 +5,9 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import List from "./components/list";
 import Post from "./components/post";
-import { connect } from "react-redux";
 import history from "./browser-history";
 
-function App({ combinedData }) {
+function App() {
   return (
     <React.Fragment>
       <Router history={history}>
@@ -24,11 +23,7 @@ function App({ combinedData }) {
           exact
           path={"/post/:id"}
           render={({ match }) => {
-            return (
-              <Post
-                param={match.params.id}
-              />
-            );
+            return <Post param={match.params.id} />;
           }}
         />
         <Footer />
@@ -37,8 +32,4 @@ function App({ combinedData }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  combinedData: state.combinedData,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
