@@ -1,4 +1,13 @@
-import { getPosts, getUsers, getComments, getPost, deletePost } from "./api";
+import {
+  getPosts,
+  getUsers,
+  getComments,
+  getPost,
+  deletePost,
+  addPost,
+  addComment,
+  deleteComment
+} from "./api";
 import { ActionCreator } from "./store/action";
 
 export const fetchPosts = () => (dispatch) => {
@@ -35,6 +44,26 @@ export const fetchPost = (id) => (dispatch) => {
 
 export const fetchDeletePost = (id) => (dispatch) => {
   deletePost(id).then((response) => {
-    console.log(response);
+    if (response.status === 200) {
+      dispatch(ActionCreator.deletePost(id));
+    }
+  });
+};
+
+export const fetchAddNewPost = (data) => (dispatch) => {
+  addPost(data).then((newData) => {
+    dispatch(ActionCreator.handleSendBtn(newData));
+  });
+};
+
+export const fetchAddNewComment = (data) => (dispatch) => {
+  addComment(data).then((newData) => {
+    dispatch(ActionCreator.handleSendBtnMessage(newData));
+  });
+};
+
+export const fetchDeleteComment = (id) => (dispatch) => {
+  deleteComment(id).then(() => {
+    dispatch(ActionCreator.deleteComment(id));
   });
 };

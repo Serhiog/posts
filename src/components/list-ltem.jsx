@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
-import { fetchDeletePost, fetchPosts } from "../api-actions"
+import { fetchDeletePost } from "../api-actions"
 
 function ListItem({ combinedData, deletePost }) {
 
@@ -31,7 +31,6 @@ const mapToStateProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     deletePost(id) {
         dispatch(fetchDeletePost(id))
-        dispatch(fetchPosts())
     }
 })
 

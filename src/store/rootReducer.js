@@ -5,9 +5,6 @@ const initialState = {
   posts: [],
   activePost: {},
   activeComments: [],
-  formName: "",
-  formEmail: "",
-  formMessage: "",
   formId: "",
   users: [],
   combinedData: [],
@@ -33,16 +30,10 @@ const rootReducer = (state = initialState, action) => {
       });
     case ActionType.DELETE_COMMENT:
       return Object.assign({}, state, {
-        actualComments: state.actualComments.filter((comment) => {
+        activeComments: state.activeComments.filter((comment) => {
           return comment.id !== action.payload;
         }),
       });
-    case ActionType.CHANGE_NAME:
-      return Object.assign({}, state, { formName: action.payload });
-    case ActionType.CHANGE_EMAIL:
-      return Object.assign({}, state, { formEmail: action.payload });
-    case ActionType.CHANGE_MESSAGE:
-      return Object.assign({}, state, { formMessage: action.payload });
     case ActionType.SEND_BTN:
       return Object.assign({}, state, {
         combinedData: [
@@ -51,15 +42,15 @@ const rootReducer = (state = initialState, action) => {
             name: action.payload.name,
             email: action.payload.email,
             body: action.payload.message,
-            id: state.formId,
+            id: action.payload.id,
             title: action.payload.email,
           },
         ],
       });
     case ActionType.SEND_BTN_MESSAGE:
       return Object.assign({}, state, {
-        actualComments: [
-          ...state.actualComments,
+        activeComments: [
+          ...state.activeComments,
           {
             name: action.payload.name,
             email: action.payload.email,
@@ -69,13 +60,9 @@ const rootReducer = (state = initialState, action) => {
           },
         ],
       });
-    case ActionType.GENERATE_ID:
-      return Object.assign({}, state, {
-        formId: state.combinedData[state.combinedData.length - 1].id + 1,
-      });
     case ActionType.GENERATE_ID_MESSAGE:
       return Object.assign({}, state, {
-        formId: state.actualComments[state.actualComments.length - 1].id + 1,
+        formId: state.activeComments[state.activeComments.length - 1].id + 1,
       });
     case ActionType.GET_USERS:
       return Object.assign({}, state, {

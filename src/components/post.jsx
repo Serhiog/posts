@@ -1,11 +1,10 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import { ActionCreator } from "../store/action"
 import Form from "./form"
 import { BeatLoader } from "react-spinners"
-import { fetchComments, fetchPost, fetchDeletePost } from "../api-actions";
+import { fetchComments, fetchPost, fetchDeleteComment } from "../api-actions";
 
-function Post({ param, activeComments, fetchComments, fetchPost, combinedPost }) {
+function Post({ param, activeComments, fetchComments, fetchPost, combinedPost, handleDeleteComment }) {
 
     useEffect(() => {
         fetchComments(param)
@@ -33,7 +32,7 @@ function Post({ param, activeComments, fetchComments, fetchPost, combinedPost })
                             <p className="post__item-author">{comment.name}</p>
                             <span className="post__item-email">{comment.email}</span>
                             <p className="post__item-text">{comment.body}</p>
-                            <button className="post__btn" onClick={() => { console.log('del') }}>X</button>
+                            <button className="post__btn" onClick={() => { handleDeleteComment(comment.id) }}>X</button>
                         </li>
                     })}
                 </ul>
@@ -46,27 +45,19 @@ function Post({ param, activeComments, fetchComments, fetchPost, combinedPost })
 const mapStateToProps = (state) => ({
     activePost: state.activePost,
     activeComments: state.activeComments,
-    actualComments: state.actualComments,
     combinedPost: state.combinedPost
 })
 
 const mapDispatchToProps = (dispatch) => ({
     handleDeleteComment(id) {
-        dispatch(ActionCreator.deleteComment(id))
+        dispatch(fetchDeleteComment(id))
     },
     fetchComments(id) {
         dispatch(fetchComments(id))
     },
-    getActualComments(id) {
-        dispatch(ActionCreator.getActualComments(id))
-    },
     fetchPost(id) {
         dispatch(fetchPost(id))
     },
-    combinePost() {
-        dispatch(ActionCreator.combinePost());
-    },
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

@@ -1,67 +1,65 @@
+import axios from "axios";
+
 export function getPosts() {
-  return fetch("https://jsonplaceholder.typicode.com/posts")
+  return axios
+    .get("https://jsonplaceholder.typicode.com/posts")
     .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      return json;
+      return response.data;
     });
 }
 
 export function getUsers() {
-  return fetch("https://jsonplaceholder.typicode.com/users")
+  return axios
+    .get("https://jsonplaceholder.typicode.com/users")
     .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      return json;
+      return response.data;
     });
 }
 
 export function getComments(id) {
-  return fetch("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
+  return axios
+    .get("https://jsonplaceholder.typicode.com/posts/" + id + "/comments")
     .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      return json;
+      return response.data;
     });
 }
 
 export function getPost(id) {
-  return fetch("https://jsonplaceholder.typicode.com/posts/" + id)
+  return axios
+    .get("https://jsonplaceholder.typicode.com/posts/" + id)
     .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      return json;
+      return response.data;
     });
 }
 
 export function deletePost(id) {
-  return fetch("https://jsonplaceholder.typicode.com/posts/" + id, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      return response.json();
+  return axios.delete("https://jsonplaceholder.typicode.com/posts/" + id);
+}
+
+export function deleteComment(id) {
+  return axios.delete("https://jsonplaceholder.typicode.com/comments/" + id);
+}
+
+export function addPost({ name, email, message }) {
+  return axios
+    .post("https://jsonplaceholder.typicode.com/posts", {
+      name,
+      email,
+      message,
     })
-    .then((json) => {
-      return json;
+    .then((response) => {
+      return response.data;
     });
 }
 
-// /posts	100 posts
-// /comments	500 comments
-// /albums	100 albums
-// /photos	5000 photos
-// /todos	200 todos
-// /users	10 users
-
-// GET	/posts
-// GET	/posts/1
-// GET	/posts/1/comments
-// GET	/comments?postId=1
-// POST	/posts
-// PUT	/posts/1
-// PATCH	/posts/1
-// DELETE	/posts/1
+export function addComment({ name, email, message }) {
+  return axios
+    .put("https://jsonplaceholder.typicode.com/posts/1", {
+      name,
+      email,
+      message,
+    })
+    .then((response) => {
+      return response.data;
+    });
+}
