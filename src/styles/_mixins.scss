@@ -11,7 +11,7 @@
     overflow: hidden;
 }
 
-@mixin flex($direction: row, $justify-content: space-between, $flex-wrap: nowrap, $align-items: center) {
+@mixin flex($direction: row, $justify-content: space-between, $flex-wrap: wrap, $align-items: center) {
     display: flex;
     flex-wrap: $flex-wrap;
     justify-content: $justify-content;

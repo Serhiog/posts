@@ -1,98 +1,96 @@
 import { ActionType } from "./action";
+import slider1Min from "../img/slider-1-min.png";
+import slider2Min from "../img/slider-min-2.jpg";
+import slider3Min from "../img/slider-min-3.png";
+import slider1Big from "../img/slider-big-1.png";
+import slider2Big from "../img/slider-2-big.png";
+import slider3Big from "../img/slider-3-big.png";
 
 const initialState = {
-  gotPosts: false,
-  posts: [],
-  activePost: {},
-  activeComments: [],
-  formId: "",
-  users: [],
-  combinedData: [],
-  actualComments: [],
-  combinedPost: {},
+  stars: [
+    {
+      id: 1,
+      isSelected: false,
+    },
+    {
+      id: 2,
+      isSelected: false,
+    },
+    {
+      id: 3,
+      isSelected: false,
+    },
+    {
+      id: 4,
+      isSelected: false,
+    },
+    {
+      id: 5,
+      isSelected: false,
+    },
+  ],
+
+  picPreviews: [
+    { pic: slider1Min, id: 1 },
+    { pic: slider2Min, id: 2 },
+    { pic: slider3Min, id: 3 },
+  ],
+  bigPics: [
+    { pic: slider1Big, id: 1 },
+    { pic: slider2Big, id: 2 },
+    { pic: slider3Big, id: 3 },
+  ],
+  activePic: "",
+  showPopup: false,
+  reviews: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.UPDATE_POSTS:
-      return Object.assign({}, state, { posts: action.payload.slice(0, 10) });
-    case ActionType.SAVE_POST:
-      return Object.assign({}, state, { activePost: action.payload });
-    case ActionType.GOT_POSTS:
-      return Object.assign({}, state, { gotPosts: true });
-    case ActionType.SAVE_COMMENTS:
-      return Object.assign({}, state, { activeComments: action.payload });
-    case ActionType.DELETE_POST:
-      return Object.assign({}, state, {
-        combinedData: state.combinedData.filter((post) => {
-          return post.id !== action.payload;
-        }),
+    case ActionType.GET_INITIAL_PIC:
+      return Object.assign({}, state, { activePic: state.bigPics[0] });
+    case ActionType.GET_NEXT_PIC:
+      const picNext = state.bigPics.find((pic) => {
+        return pic.id === action.payload;
       });
-    case ActionType.DELETE_COMMENT:
       return Object.assign({}, state, {
-        activeComments: state.activeComments.filter((comment) => {
-          return comment.id !== action.payload;
-        }),
+        activePic: picNext,
       });
-    case ActionType.SEND_BTN:
+    case ActionType.GET_PREVIOUSLY_PIC:
+      const picPreviously = state.bigPics.find((pic) => {
+        return pic.id === action.payload;
+      });
       return Object.assign({}, state, {
-        combinedData: [
-          ...state.combinedData,
-          {
-            name: action.payload.name,
-            email: action.payload.email,
-            body: action.payload.message,
-            id: action.payload.id,
-            title: action.payload.email,
-          },
+        activePic: picPreviously,
+      });
+    case ActionType.SHOW_POPUP:
+      return Object.assign({}, state, { showPopup: true });
+    case ActionType.HIDE_POPUP:
+      return Object.assign({}, state, { showPopup: false });
+    case ActionType.SEND_REVIEW:
+      return Object.assign({}, state, {
+        reviews: [
+          ...state.reviews,
+          Object.assign({}, action.payload, { id: state.reviews.length }),
         ],
       });
-    case ActionType.SEND_BTN_MESSAGE:
+    case ActionType.SET_FAVORITE_STAR:
       return Object.assign({}, state, {
-        activeComments: [
-          ...state.activeComments,
-          {
-            name: action.payload.name,
-            email: action.payload.email,
-            body: action.payload.message,
-            id: state.formId,
-            title: action.payload.email,
-          },
-        ],
-      });
-    case ActionType.GENERATE_ID_MESSAGE:
-      return Object.assign({}, state, {
-        formId: state.activeComments[state.activeComments.length - 1].id + 1,
-      });
-    case ActionType.GET_USERS:
-      return Object.assign({}, state, {
-        users: action.payload,
-      });
-    case ActionType.COMBINE_DATA:
-      return Object.assign({}, state, {
-        combinedData: state.posts.map((post) => {
-          const user = state.users.find((user) => user.id === post.id);
-          return Object.assign(
-            {},
-            post,
-            { name: user.name },
-            { email: user.email }
-          );
+        stars: state.stars.map((star) => {
+          if (star.id <= action.payload) {
+            star.isSelected = true;
+          }
+          return star;
         }),
       });
-    case ActionType.GET_COMMENTS:
+    case ActionType.RESET_FAVORITE_STAR:
       return Object.assign({}, state, {
-        activeComments: action.payload,
-      });
-    case ActionType.COMBINE_POST:
-      return Object.assign({}, state, {
-        combinedPost: Object.assign(
-          {},
-          state.activePost,
-          state.users.find((user) => {
-            return user.id === state.activePost.id;
-          })
-        ),
+        stars: state.stars.map((star) => {
+          if (star.id <= action.payload) {
+            star.isSelected = false;
+          }
+          return star;
+        }),
       });
     default:
       return state;
